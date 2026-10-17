@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: sinzu-mail
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: INBOUND_SECRET
+        generateValue: true
