@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SINZU | SQUAD KIT</title>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Poppins:wght@300;400;600;700&family=Bungee&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#ff0000;--gold:#ffcc00;--bg:#05070a;--glass:rgba(255,255,255,.02);--gb:rgba(255,204,0,.15)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:var(--bg);color:#fff;overflow-x:hidden;padding-bottom:30px}
+.hero{text-align:center;padding:30px 0 10px}
+.logo{width:64px;height:64px;margin:0 auto 8px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;font:700 1.6rem 'Syncopate',sans-serif;color:var(--gold);box-shadow:0 0 20px rgba(255,0,0,.3)}
+.wave{display:flex;justify-content:center;font:700 1.1rem 'Syncopate',sans-serif;letter-spacing:3px;color:var(--gold)}
+.wave span{animation:w 2s infinite ease-in-out;animation-delay:calc(.1s*var(--i))}
+@keyframes w{0%,40%,100%{transform:translateY(0)}20%{transform:translateY(-8px);color:var(--accent)}}
+@media(prefers-reduced-motion:reduce){.wave span{animation:none}}
+.tag{font:700 .45rem 'Syncopate',sans-serif;color:var(--accent);letter-spacing:2px;margin-top:6px}
+section{padding:0 4%;max-width:480px;margin:0 auto}
+.tabs{display:flex;gap:6px;margin:14px 0}
+.tab{flex:1;padding:10px 4px;font:700 .5rem 'Syncopate',sans-serif;border:1px solid rgba(255,255,255,.1);color:#888;background:none;border-radius:6px;cursor:pointer}
+.tab.on{border-color:var(--accent);color:var(--accent);background:rgba(255,0,0,.05)}
+.panel{display:none}.panel.on{display:block}
+.sh{font:700 .6rem 'Syncopate',sans-serif;color:var(--gold);margin:12px 0;display:flex;align-items:center;gap:10px}
+.sh::after{content:"";height:1px;flex:1;background:linear-gradient(to right,var(--gold),transparent);opacity:.2}
+.card{background:var(--glass);border:1px solid var(--gb);border-radius:10px;padding:12px;margin-bottom:12px}
+.modes{display:flex;gap:6px;margin-bottom:12px}
+.mode{flex:1;padding:8px;text-align:center;cursor:pointer;border-radius:6px;font:700 .55rem 'Syncopate',sans-serif;border:1px solid rgba(255,255,255,.1);color:#888}
+.mode.active{border-color:var(--accent);color:var(--accent);background:rgba(255,0,0,.05)}
+.row{display:flex;gap:6px;align-items:center}
+input,textarea,select{width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);padding:10px;border-radius:6px;color:var(--gold);font-size:.75rem;outline:none;margin-bottom:8px}
+input[type=color]{padding:2px;height:38px;width:60px;margin:0}
+textarea{min-height:90px;resize:vertical}
+.row input{flex:1;min-width:0;margin:0}
+button.b{padding:10px;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);font:700 .5rem 'Syncopate',sans-serif;cursor:pointer;white-space:nowrap}
+button.full{width:100%;margin-top:4px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--gold)}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+.msg{background:rgba(255,0,0,.03);border:1px solid rgba(255,0,0,.1);border-left:3px solid var(--accent);padding:12px;border-radius:8px;margin-top:8px}
+.mh{display:flex;justify-content:space-between;gap:8px;font:700 .5rem 'Syncopate',sans-serif;color:#888;margin-bottom:6px}
+.subj{font-size:.7rem;margin-bottom:8px;word-break:break-word}
+.code{border:1px dashed var(--accent);background:rgba(0,0,0,.5);padding:10px;border-radius:6px;font-weight:700;color:var(--accent);display:flex;justify-content:space-between;cursor:pointer}
+.empty{text-align:center;font:.5rem 'Syncopate',sans-serif;color:#555}
+.h{display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid rgba(255,255,255,.05);gap:8px}
+.h span{color:var(--gold);font-size:.6rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vi{margin-bottom:12px}.vi canvas{width:100%;display:block;border-radius:8px;border:1px solid var(--gb)}
+.vi .b{width:100%;margin-top:6px}
+.lg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.nm{padding:12px 8px;text-align:center;border:1px solid var(--gb);border-radius:8px;font-size:.75rem;cursor:pointer;background:var(--glass)}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent);padding:10px 15px;border-radius:4px;font:.5rem 'Syncopate',sans-serif;display:none;z-index:9}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="logo">S</div>
+  <div class="wave"><span style="--i:1">S</span><span style="--i:2">I</span><span style="--i:3">N</span><span style="--i:4">Z</span><span style="--i:5">U</span></div>
+  <p class="tag">SQUAD KIT · MAIL · BANNER · NAMES</p>
+</header>
+<section>
+  <div class="tabs">
+    <button class="tab on" data-p="pm">MAIL</button>
+    <button class="tab" data-p="pb">BRAND KIT</button>
+    <button class="tab" data-p="pn">NAMES</button>
+  </div>
+
+  <div class="panel on" id="pm">
+    <div class="card">
+      <div class="modes">
+        <div class="mode active" id="m-random" onclick="setMode('random')">RANDOM</div>
+        <div class="mode" id="m-custom" onclick="setMode('custom')">CUSTOM</div>
+      </div>
+      <div class="row">
+        <input id="email" placeholder="Click GENERATE..." readonly>
+        <button class="b" id="go" onclick="handleAction()">GENERATE</button>
+      </div>
+      <div class="grid">
+        <button class="b" onclick="copyEmail()">COPY</button>
+        <button class="b" onclick="loadInbox()">CHECK</button>
+        <button class="b" onclick="enableNotify()">NOTIFY</button>
+      </div>
+    </div>
+    <div class="sh">INBOX</div>
+    <div id="inbox"><p class="empty">WAITING...</p></div>
+    <div class="sh">HISTORY</div>
+    <div id="history" class="card"></div>
+  </div>
+
+  <div class="panel" id="pb">
+    <div class="card">
+      <input id="bn" placeholder="Squad name" maxlength="30">
+      <textarea id="bm" placeholder="Members, one per line or separated by commas"></textarea>
+      <select id="bs">
+        <option value="neon">Neon</option><option value="esports">Esports</option>
+        <option value="graffiti">Graffiti</option><option value="vintage">Vintage</option>
+      </select>
+      <div class="row" style="margin-bottom:8px"><input id="bc" disabled value="Accent colour (optional)" style="color:#888"><input type="color" id="ba" value="#ff2bd6"></div>
+      <button class="b full" onclick="makeBrand()">GENERATE BANNER, SDP + LOGO</button>
+    </div>
+    <div class="sh" id="bh" style="display:none">BANNERS</div><div id="banners"></div>
+    <div class="sh" id="sh2" style="display:none">SDP (SQUAD DISPLAY PICTURE)</div><div id="sdps" class="lg"></div>
+    <div class="sh" id="lh" style="display:none">LOGOS</div><div id="logos" class="lg"></div>
+  </div>
+
+  <div class="panel" id="pn">
+    <div class="card">
+      <select id="nv">
+        <option value="savage">Savage</option><option value="dark">Dark</option>
+        <option value="esports">Esports</option><option value="cute">Cute</option>
+        <option value="tropa">Tropa (Taglish)</option>
+        <option value="dummy">Dummy / aesthetic username</option>
+        <option value="rpph">RP character - Filipino</option>
+        <option value="rpw">RP character - Western</option>
+        <option value="rpm">RP character - Mafia alias</option>
+      </select>
+      <input id="nk" placeholder="Keyword or first name (optional)" maxlength="14">
+      <button class="b full" onclick="makeNames()">GENERATE NAMES</button>
+    </div>
+    <div id="names" class="names"></div>
+  </div>
+</section>
+<div id="toast"></div>
+<script>
+const DOMAIN="@svmail.com",API="/api/messages?address=",KEY="sinzuMailHistory";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch{return[]}};
+const save=a=>{try{localStorage.setItem(KEY,JSON.stringify(a))}catch{}};
+function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2000)}
+function copy(t){navigator.clipboard.writeText(t).then(()=>toast("COPIED"))}
+function copyEmail(){const v=$("email").value;if(v)copy(v)}
+
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab,.panel").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");$(t.dataset.p).classList.add("on");
+});
+
+/* ---------- MAIL ---------- */
+let mode="random",seen={};
+function setMode(m){
+  mode=m;
+  $("m-random").classList.toggle("active",m==="random");
+  $("m-custom").classList.toggle("active",m==="custom");
+  const i=$("email");i.value="";i.readOnly=m==="random";
+  i.placeholder=m==="random"?"Click GENERATE...":"Type a name";
+  $("go").textContent=m==="random"?"GENERATE":"CREATE";
+  if(m==="custom")i.focus();
+}
+function handleAction(){
+  let name;
+  if(mode==="random")name=Math.random().toString(36).slice(2,10);
+  else{
+    name=$("email").value.trim().toLowerCase().split("@")[0].replace(/[^a-z0-9._-]/g,"").slice(0,30);
+    if(!name){toast("NAME_REQUIRED");return}
+  }
+  const full=name+DOMAIN;$("email").value=full;
+  const h=load().filter(x=>x!==full);h.unshift(full);save(h.slice(0,5));
+  renderHistory();toast("MAIL_READY");loadInbox();
+}
+function enableNotify(){
+  if(!("Notification" in window)){toast("NOT_SUPPORTED");return}
+  Notification.requestPermission().then(p=>toast(p==="granted"?"NOTIFY_ON":"NOTIFY_BLOCKED"));
+}
+async function loadInbox(quiet){
+  const email=$("email").value;if(!email)return;
+  const box=$("inbox");
+  if(!quiet===true||quiet===undefined)box.innerHTML='<p class="empty">SYNCING...</p>';
+  try{
+    const r=await fetch(API+encodeURIComponent(email));
+    if(!r.ok)throw 0;
+    const data=await r.json();
+    if(quiet===true&&seen[email]!==undefined&&data.length>seen[email]&&Notification.permission==="granted"){
+      new Notification("New mail on "+email,{body:data[0].subject||"(no subject)"});
+    }
+    seen[email]=data.length;
+    if(!data.length){box.innerHTML='<p class="empty">EMPTY</p>';return}
+    box.innerHTML=data.map(m=>{
+      const hit=((m.subject||"")+" "+(m.text||"")).match(/\b\d{4,8}\b/);
+      return `<div class="msg">
+        <div class="mh"><span>${esc((m.from||"").split("<")[0].replace(/"/g,"").trim()||"unknown")}</span><span>${esc(new Date(m.date).toLocaleTimeString())}</span></div>
+        <div class="subj">${esc(m.subject)}</div>
+        <div class="code" data-copy="${esc(hit?hit[0]:m.subject)}"><span>${esc(hit?hit[0]:"COPY SUBJECT")}</span><span>⧉</span></div>
+      </div>`}).join("");
+  }catch{if(quiet!==true)box.innerHTML='<p class="empty" style="color:red">ERROR</p>'}
+}
+$("inbox").addEventListener("click",e=>{const c=e.target.closest(".code");if(c)copy(c.dataset.copy)});
+function renderHistory(){
+  const h=load(),l=$("history");
+  if(!h.length){l.innerHTML='<p class="empty">EMPTY</p>';return}
+  l.innerHTML=h.map((x,i)=>`<div class="h"><span>${esc(x)}</span><div class="row"><button class="b" data-use="${i}">USE</button><button class="b" data-del="${i}">DEL</button></div></div>`).join("");
+}
+$("history").addEventListener("click",e=>{
+  const h=load(),u=e.target.dataset.use,d=e.target.dataset.del;
+  if(u!==undefined){$("email").value=h[u];loadInbox();toast("RESTORED")}
+  if(d!==undefined){h.splice(d,1);save(h);renderHistory();toast("DELETED")}
+});
+renderHistory();
+setInterval(()=>{if($("email").value&&!document.hidden)loadInbox(true)},15000);
+
+/* ---------- BANNER + LOGO ---------- */
+const PAL={
+  neon:{bg:["#0a0020","#1b0040"],a:"#00f0ff",b:"#ff2bd6",t:"#ffffff",font:"Syncopate"},
+  esports:{bg:["#0b0b0f","#2a0606"],a:"#ff1f1f",b:"#ffb400",t:"#ffffff",font:"Bungee"},
+  graffiti:{bg:["#2b1055","#4a6fd6"],a:"#ffe600",b:"#ff4d8d",t:"#ffffff",font:"Permanent Marker"},
+  vintage:{bg:["#f1e4c8","#d9c39a"],a:"#8c2f1b",b:"#2f4a3a",t:"#2a1c10",font:"Poppins"}
+};
+let accentSet=false;
+$("ba").addEventListener("input",()=>{accentSet=true;$("bc").value="Accent colour set"});
+function hash(s){let h=2166136261;for(let i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619);return h>>>0}
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function poly(c,x,y,r,n,rot){c.beginPath();for(let i=0;i<n;i++){const a=rot+i*2*Math.PI/n;i?c.lineTo(x+r*Math.cos(a),y+r*Math.sin(a)):c.moveTo(x+r*Math.cos(a),y+r*Math.sin(a))}c.closePath()}
+function shape(c,k,x,y,s){
+  if(k===0){c.beginPath();c.arc(x,y,s/2,0,7)}
+  else if(k===1)poly(c,x,y,s/2,6,Math.PI/6);
+  else if(k===2)poly(c,x,y,s*.56,4,0);
+  else{c.beginPath();c.moveTo(x-s*.45,y-s*.5);c.lineTo(x+s*.45,y-s*.5);c.lineTo(x+s*.45,y+s*.05);c.quadraticCurveTo(x+s*.45,y+s*.35,x,y+s*.5);c.quadraticCurveTo(x-s*.45,y+s*.35,x-s*.45,y+s*.05);c.closePath()}
+}
+function star(c,x,y,r){c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r*.45:r;i?c.lineTo(x+q*Math.cos(a),y+q*Math.sin(a)):c.moveTo(x+q*Math.cos(a),y+q*Math.sin(a))}c.closePath()}
+function drawLogo(c,x,y,s,P,r,ini){
+  const k=Math.floor(r()*4),n=Math.floor(r()*4);
+  const g=c.createLinearGradient(x-s/2,y-s/2,x+s/2,y+s/2);g.addColorStop(0,P.a);g.addColorStop(1,P.b);
+  shape(c,k,x,y,s);c.fillStyle=g;c.fill();c.lineWidth=s*.05;c.strokeStyle=P.t;c.stroke();
+  shape(c,k,x,y,s*.8);c.lineWidth=s*.015;c.strokeStyle="rgba(255,255,255,.7)";c.stroke();
+  c.fillStyle="#fff";c.textAlign="center";c.textBaseline="middle";
+  c.font=`700 ${s*(ini.length>1?.3:.4)}px "${P.font}"`;c.shadowColor="rgba(0,0,0,.6)";c.shadowBlur=s*.03;
+  c.fillText(ini,x,y+s*.02);c.shadowBlur=0;
+  c.fillStyle="#ffd54a";
+  for(let i=0;i<n;i++){star(c,x+(i-(n-1)/2)*s*.16,y-s*.62,s*.06);c.fill()}
+}
+function pat(c,W,H,P,r){
+  c.save();c.globalAlpha=.12;c.strokeStyle=c.fillStyle=P.a;c.lineWidth=6;
+  const p=Math.floor(r()*4);
+  if(p===0)for(let x=-H;x<W;x+=50){c.beginPath();c.moveTo(x,H);c.lineTo(x+H,0);c.stroke()}
+  if(p===1)for(let x=25;x<W;x+=50)for(let y=25;y<H;y+=50){c.beginPath();c.arc(x,y,6,0,7);c.fill()}
+  if(p===2){c.lineWidth=2;for(let x=0;x<W;x+=60){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke()}for(let y=0;y<H;y+=60){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}}
+  if(p===3)for(let i=0;i<5;i++){c.beginPath();c.arc(W*.2,H/2,80+i*90,0,7);c.stroke()}
+  c.restore();
+}
+function drawSDP(cv,name,mem,P,r,ini){
+  const W=1080,c=cv.getContext("2d");cv.width=cv.height=W;
+  const g=c.createLinearGradient(0,0,W,W);g.addColorStop(0,P.bg[0]);g.addColorStop(1,P.bg[1]);
+  c.fillStyle=g;c.fillRect(0,0,W,W);pat(c,W,W,P,r);
+  drawLogo(c,540,200,230,P,r,ini);
+  const T=name.toUpperCase();let fs=110;
+  do{c.font=`700 ${fs}px "${P.font}"`;fs-=4}while(c.measureText(T).width>900&&fs>36);
+  c.textAlign="center";c.textBaseline="alphabetic";c.fillStyle=P.t;c.fillText(T,540,410);
+  const tw=Math.min(900,c.measureText(T).width);c.fillStyle=P.a;c.fillRect(540-tw/2,430,tw,8);
+  const n=Math.max(mem.length,1),cols=n<=8?2:n<=18?3:4,rows=Math.ceil(n/cols);
+  const rh=Math.min(70,500/rows),cw=900/cols,f=Math.round(rh*.5);
+  c.font=`600 ${f}px "Poppins"`;c.textBaseline="middle";
+  mem.slice(0,28).forEach((m,i)=>{
+    const x=90+(i%cols)*cw,y=480+Math.floor(i/cols)*rh;
+    c.fillStyle=P.a;c.globalAlpha=.16;c.beginPath();c.roundRect(x+6,y+4,cw-12,rh-8,(rh-8)/2);c.fill();c.globalAlpha=1;
+    c.fillStyle=P.t;c.fillText(m,x+cw/2,y+rh/2,cw-40);
+  });
+  c.strokeStyle=P.b;c.lineWidth=8;c.strokeRect(20,20,W-40,W-40);
+  c.font='600 20px "Poppins"';c.globalAlpha=.6;c.fillStyle=P.t;c.textBaseline="alphabetic";c.fillText("made with svmail.com",540,W-40);c.globalAlpha=1;
+}
+function drawBanner(cv,name,mem,P,r,ini){
+  const W=1500,H=500,c=cv.getContext("2d");cv.width=W;cv.height=H;
+  const g=c.createLinearGradient(0,0,W,H);g.addColorStop(0,P.bg[0]);g.addColorStop(1,P.bg[1]);
+  c.fillStyle=g;c.fillRect(0,0,W,H);
+  pat(c,W,H,P,r);
+  drawLogo(c,260,260,330,P,r,ini);
+  const T=name.toUpperCase();let fs=130;
+  do{c.font=`700 ${fs}px "${P.font}"`;fs-=4}while(c.measureText(T).width>880&&fs>40);
+  c.textAlign="left";c.textBaseline="alphabetic";c.fillStyle=P.t;c.fillText(T,480,200);
+  c.fillStyle=P.a;c.fillRect(480,222,Math.min(880,c.measureText(T).width),8);
+  c.font='600 30px "Poppins"';c.fillStyle=P.t;
+  mem.slice(0,12).forEach((m,i)=>c.fillText("› "+(m.length>14?m.slice(0,13)+"…":m),480+Math.floor(i/4)*300,290+(i%4)*44));
+  if(mem.length>12){c.fillStyle=P.a;c.fillText("+"+(mem.length-12)+" more",1180,466)}
+  c.strokeStyle=P.b;c.lineWidth=8;c.strokeRect(16,16,W-32,H-32);
+  c.font='600 22px "Poppins"';c.textAlign="right";c.globalAlpha=.6;c.fillStyle=P.t;c.fillText("made with svmail.com",W-40,H-36);c.globalAlpha=1;
+}
+async function makeBrand(){
+  const name=$("bn").value.trim();if(!name){toast("NAME_REQUIRED");return}
+  const mem=$("bm").value.split(/[\n,]+/).map(s=>s.trim()).filter(Boolean);
+  const P={...PAL[$("bs").value]};if(accentSet)P.a=$("ba").value;
+  await Promise.all(["Syncopate","Bungee","Permanent Marker","Poppins"].map(f=>document.fonts.load(`700 40px "${f}"`)));
+  const ini=name.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
+  const bn=$("banners"),lg=$("logos");bn.innerHTML="";lg.innerHTML="";
+  $("bh").style.display=$("lh").style.display=$("sh2").style.display="flex";$("sdps").innerHTML="";
+  const base=hash(name+mem.join("|"))^Math.floor(Math.random()*1e9);
+  for(let i=0;i<4;i++){
+    const r=rng(base+i*7919);
+    const d=document.createElement("div");d.className="vi";
+    d.innerHTML=`<canvas></canvas><button class="b" data-f="${esc(name)}-banner-${i+1}">SAVE BANNER ${i+1}</button>`;
+    bn.appendChild(d);drawBanner(d.querySelector("canvas"),name,mem,P,r,ini);
+    const r2=rng(base+i*104729),l=document.createElement("div");l.className="vi";
+    l.innerHTML=`<canvas width="512" height="512"></canvas><button class="b" data-f="${esc(name)}-logo-${i+1}">SAVE LOGO ${i+1}</button>`;
+    lg.appendChild(l);drawLogo(l.querySelector("canvas").getContext("2d"),256,280,340,P,r2,ini);
+    const sd=document.createElement("div");sd.className="vi";
+    sd.innerHTML=`<canvas></canvas><button class="b" data-f="${esc(name)}-sdp-${i+1}">SAVE SDP ${i+1}</button>`;
+    $("sdps").appendChild(sd);drawSDP(sd.querySelector("canvas"),name,mem,P,rng(base+i*15485863),ini);
+  }
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-f]");if(!b)return;
+  b.parentElement.querySelector("canvas").toBlob(bl=>{const a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download=b.dataset.f+".png";a.click()});
+});
+
+/* ---------- NAMES ---------- */
+const NAMES={
+  savage:[["Savage","Ruthless","Reckless","Fearless","Toxic","Brutal","Wild","Lethal"],["Wolves","Syndicate","Kings","Dynasty","Vandals","Outlaws","Reapers","Squad"]],
+  dark:[["Shadow","Midnight","Void","Phantom","Eclipse","Silent","Crimson","Obsidian"],["Order","Legion","Ghosts","Covenant","Reign","Cult","Hollow","Pact"]],
+  esports:[["Apex","Nova","Titan","Rogue","Vortex","Alpha","Blitz","Prime"],["Esports","Gaming","Clan","Squad","Elite","Strike","Force","Unit"]],
+  cute:[["Sweet","Tiny","Fluffy","Happy","Lucky","Soft","Cozy","Sunny"],["Bunnies","Crew","Babies","Gang","Cloud","Pandas","Tribe","Club"]],
+  tropa:[["Tropang","Kanto","Eskinita","Tambay","Lodi","Astig","Paldo","Barkada"],["Squad","Kings","Gang","Crew","Syndicate","Elite","Walang Tulog","Sabog"]]
+};
+const pick=a=>a[Math.floor(Math.random()*a.length)],num=()=>Math.floor(Math.random()*90+10);
+const RP={
+  ph:[["Juan","Miguel","Carlo","Ramon","Marco","Jericho","Lorenzo","Andres","Bianca","Mika","Althea","Sofia","Carmela","Isabel","Katrina","Danica"],["Dela Cruz","Santos","Reyes","Villanueva","Mendoza","Bautista","Navarro","Salazar","Domingo","Castillo","Ramirez","Aquino"]],
+  w:[["Jack","Tommy","Marcus","Vincent","Elias","Damon","Elena","Sienna","Nadia","Rosa","Mia","Luca"],["Blackwood","Moretti","Sullivan","Kane","Rossi","Holloway","Vance","Calloway","Marlowe","Ashford"]],
+  al:["Snake","Ghost","Duke","Knuckles","Viper","Dice","Smiley","Ace","Bones","Tiger","Shadow","Lucky"]
+};
+const DA=["lost","silent","pale","neon","velvet","moon","broken","soft","fading","lonely","midnight","glass"],DN=["soul","diary","memory","vibes","ghost","static","dream","night","petal","echo","bloom","haze"];
+const GEN={
+  dummy:k=>{const m=Math.random();return k?(m<.3?`${k}.${pick(DN)}`:m<.6?`${pick(DA)}_${k}${num()}`:`its.${k}`):(m<.35?`${pick(DA)}.${pick(DN)}`:m<.7?`${pick(DA)}_${pick(DN)}${num()}`:`xx${pick(DA)}${pick(DN)}xx`)},
+  rpph:k=>`${k||pick(RP.ph[0])} ${pick(RP.ph[1])}`,
+  rpw:k=>`${k||pick(RP.w[0])} ${pick(RP.w[1])}`,
+  rpm:k=>`${k||pick(RP.w[0])} "${pick(RP.al)}" ${pick(RP.w[1])}`
+};
+function makeNames(){
+  const v=$("nv").value,k=$("nk").value.trim(),out=new Set();
+  let guard=0;
+  while(out.size<12&&guard++<300){
+    if(GEN[v])out.add(GEN[v](k));
+    else{
+      const [A,B]=NAMES[v],m=Math.random();
+      out.add(k?(m<.4?`${k} ${pick(B)}`:m<.7?`${pick(A)} ${k}`:`${pick(A)} ${k} ${pick(B)}`):(m<.85?`${pick(A)} ${pick(B)}`:`${pick(A)} ${pick(B)} ${num()}`));
+    }
+  }
+  $("names").innerHTML=[...out].map(n=>`<div class="nm" data-n="${esc(n)}">${esc(n)}</div>`).join("");
+}
+$("names").addEventListener("click",e=>{const n=e.target.closest(".nm");if(n)copy(n.dataset.n)});
+</script>
+</body>
+</html>
